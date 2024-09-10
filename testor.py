@@ -25,7 +25,7 @@ class LlmTestor():
         model: OllamaLLM, 大模型
         data: list, 测试数据集
         '''
-        self.modelName = model
+        self.modelName = model.replace(':', '_')
         self.model = OllamaLLM(model=model, base_url=base_url)
         # 数据读取
         problemColumn = '问题'
@@ -58,9 +58,12 @@ class LlmTestor():
                 with open(self.txtPath, 'a', encoding='utf-8') as f:
                     f.write(conversation)
             if self.save_excel:     # 保存到excel文件
-                responseDict = json.loads(response)
                 if i == 0:
                     df = pd.DataFrame(columns=['User', self.modelName, '答案'])
-                df.loc[i] = [prompt, response, responseDict.get('答案', '')]
+                try:
+                    responseDict = json.loads(response)
+                    df.loc[i] = [prompt, response, responseDict.get('答案', '')]
+                except:
+                    df.loc[i] = [prompt, response, '回答格式不规范']
         if self.save_excel:
             df.to_excel(self.excelPath, index=False)

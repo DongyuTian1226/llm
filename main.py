@@ -12,11 +12,11 @@ def testDemo(savePath: str):
 
 def testAll(savePath: str):
     dataPath = 'data/prompts.xlsx'
-    modelList = ['glm4:latest', 'phi3.5:latest',
+    modelList = ['phi3:14b', 'glm4:latest', 'phi3.5:latest',
                  'llama3-chatqa:latest', 'llama2-chinese:latest',
                  'phi3:latest', 'llava:latest', 'yi:latest',
                  'mistral:latest', 'gemma2:latest',
-                 'llama3.1:latest', 'qwen2:latest']     # 'phi3:14b'
+                 'llama3.1:latest', 'qwen2:latest']     # 
     for model in modelList:
         testor = LlmTestor(model=model, data=dataPath, save_dir=savePath,
                         print=True, save_txt=True, save_excel=True)
